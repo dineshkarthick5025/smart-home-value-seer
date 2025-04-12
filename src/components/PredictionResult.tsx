@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { BarChart, LineChart, HelpCircle, Home, TrendingUp, DollarSign, Download } from 'lucide-react';
+import { BarChart, LineChart, HelpCircle, Home, TrendingUp, IndianRupee, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -9,12 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
-} from "@/components/ui/chart";
 import {
   Bar,
   BarChart as ReBarChart,
@@ -36,20 +29,23 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
     return null;
   }
 
-  const formattedPrice = new Intl.NumberFormat('en-US', {
+  // Converting USD to INR (approximate conversion rate used)
+  const inrValue = predictedValue * 75;
+
+  const formattedPrice = new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     maximumFractionDigits: 0
-  }).format(predictedValue);
+  }).format(inrValue);
 
   // Sample historical data
   const historicalData = [
-    { month: 'Jan', value: predictedValue * 0.92 },
-    { month: 'Feb', value: predictedValue * 0.94 },
-    { month: 'Mar', value: predictedValue * 0.97 },
-    { month: 'Apr', value: predictedValue * 0.99 },
-    { month: 'May', value: predictedValue * 1.01 },
-    { month: 'Jun', value: predictedValue },
+    { month: 'Jan', value: inrValue * 0.92 },
+    { month: 'Feb', value: inrValue * 0.94 },
+    { month: 'Mar', value: inrValue * 0.97 },
+    { month: 'Apr', value: inrValue * 0.99 },
+    { month: 'May', value: inrValue * 1.01 },
+    { month: 'Jun', value: inrValue },
   ];
 
   // Feature impact data
@@ -101,9 +97,9 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
                   <XAxis dataKey="month" />
                   <YAxis 
                     tickFormatter={(value) => 
-                      new Intl.NumberFormat('en-US', {
+                      new Intl.NumberFormat('en-IN', {
                         style: 'currency',
-                        currency: 'USD',
+                        currency: 'INR',
                         notation: 'compact',
                         maximumFractionDigits: 0
                       }).format(value)
@@ -111,9 +107,9 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
                   />
                   <ReTooltip 
                     formatter={(value: number) => [
-                      new Intl.NumberFormat('en-US', {
+                      new Intl.NumberFormat('en-IN', {
                         style: 'currency',
-                        currency: 'USD',
+                        currency: 'INR',
                         maximumFractionDigits: 0
                       }).format(value),
                       'Value'
@@ -183,15 +179,15 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
           </div>
           <p className="text-sm text-gray-600">5 similar properties in area</p>
           <p className="text-lg font-semibold text-estate-darkBlue mt-1">
-            {new Intl.NumberFormat('en-US', {
+            {new Intl.NumberFormat('en-IN', {
               style: 'currency',
-              currency: 'USD',
+              currency: 'INR',
               maximumFractionDigits: 0
-            }).format(predictedValue * 0.98)} - {new Intl.NumberFormat('en-US', {
+            }).format(inrValue * 0.98)} - {new Intl.NumberFormat('en-IN', {
               style: 'currency',
-              currency: 'USD',
+              currency: 'INR',
               maximumFractionDigits: 0
-            }).format(predictedValue * 1.05)}
+            }).format(inrValue * 1.05)}
           </p>
         </div>
         
@@ -206,16 +202,16 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
         
         <div className="bg-slate-50 p-4 rounded-lg">
           <div className="flex items-center mb-2">
-            <DollarSign className="h-5 w-5 text-estate-blue mr-2" />
+            <IndianRupee className="h-5 w-5 text-estate-blue mr-2" />
             <h5 className="font-semibold">Price per Sq Ft</h5>
           </div>
           <p className="text-sm text-gray-600">Based on living area</p>
           <p className="text-lg font-semibold text-estate-darkBlue mt-1">
-            {new Intl.NumberFormat('en-US', {
+            {new Intl.NumberFormat('en-IN', {
               style: 'currency',
-              currency: 'USD',
+              currency: 'INR',
               maximumFractionDigits: 0
-            }).format(predictedValue / 1800)}
+            }).format(inrValue / 1800)}
           </p>
         </div>
       </div>
