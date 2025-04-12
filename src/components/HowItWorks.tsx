@@ -2,29 +2,7 @@
 import React from 'react';
 import { Check, FileInput, LayoutDashboard, Search } from 'lucide-react';
 
-const steps = [
-  {
-    icon: <FileInput className="h-10 w-10 text-white" />,
-    title: "Enter Property Details",
-    description: "Fill in details like square footage, bedrooms, bathrooms, location, and amenities."
-  },
-  {
-    icon: <Cpu className="h-10 w-10 text-white" />,
-    title: "AI Analysis",
-    description: "Our machine learning model processes your inputs against our comprehensive database."
-  },
-  {
-    icon: <LayoutDashboard className="h-10 w-10 text-white" />,
-    title: "View Results",
-    description: "Get your property valuation along with insights and comparable properties."
-  },
-  {
-    icon: <Search className="h-10 w-10 text-white" />,
-    title: "Explore Factors",
-    description: "See which features have the biggest impact on your property's value."
-  }
-];
-
+// Define the Cpu component before using it
 const Cpu = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -52,6 +30,29 @@ const Cpu = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+const steps = [
+  {
+    icon: <FileInput className="h-10 w-10 text-white" />,
+    title: "Enter Property Details",
+    description: "Fill in details like square footage, bedrooms, bathrooms, location, and amenities."
+  },
+  {
+    icon: <Cpu className="h-10 w-10 text-white" />,
+    title: "AI Analysis",
+    description: "Our machine learning model processes your inputs against our comprehensive database."
+  },
+  {
+    icon: <LayoutDashboard className="h-10 w-10 text-white" />,
+    title: "View Results",
+    description: "Get your property valuation along with insights and comparable properties."
+  },
+  {
+    icon: <Search className="h-10 w-10 text-white" />,
+    title: "Explore Factors",
+    description: "See which features have the biggest impact on your property's value."
+  }
+];
 
 const HowItWorks = () => {
   return (
