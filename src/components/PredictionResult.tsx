@@ -10,18 +10,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
-  Chart,
   ChartContainer,
   ChartLegend,
-  ChartLegendItem,
-  ChartLine,
-  ChartPanel,
-  ChartPoint,
+  ChartLegendContent,
+  ChartStyle,
 } from "@/components/ui/chart";
 import {
   Bar,
   BarChart as ReBarChart,
   CartesianGrid,
+  Line,
+  LineChart as ReLineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -96,43 +95,40 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ predictedValue }) =
               </TooltipProvider>
             </div>
             <div className="h-60">
-              <ChartContainer>
-                <ChartLegend>
-                  <ChartLegendItem name="Valuation" color="#0EA5E9" />
-                </ChartLegend>
-                <ChartPanel>
-                  <Chart
-                    series={[
-                      {
-                        name: "Valuation",
-                        color: "#0EA5E9",
-                        data: historicalData.map((item) => ({
-                          x: item.month,
-                          y: item.value,
-                        })),
-                      },
+              <ResponsiveContainer width="100%" height="100%">
+                <ReLineChart data={historicalData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis 
+                    tickFormatter={(value) => 
+                      new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        notation: 'compact',
+                        maximumFractionDigits: 0
+                      }).format(value)
+                    } 
+                  />
+                  <ReTooltip 
+                    formatter={(value: number) => [
+                      new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                      }).format(value),
+                      'Value'
                     ]}
-                  >
-                    {(series) => (
-                      <>
-                        <ChartLine
-                          series={series.get("Valuation")!}
-                          strokeWidth={2}
-                        />
-                        {series
-                          .get("Valuation")!
-                          .data.map((point) => (
-                            <ChartPoint
-                              key={point.x}
-                              point={point}
-                              color={series.get("Valuation")!.color}
-                            />
-                          ))}
-                      </>
-                    )}
-                  </Chart>
-                </ChartPanel>
-              </ChartContainer>
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#0EA5E9" 
+                    strokeWidth={2}
+                    dot={{ fill: '#0EA5E9', r: 5 }}
+                    activeDot={{ r: 8 }}
+                  />
+                </ReLineChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
